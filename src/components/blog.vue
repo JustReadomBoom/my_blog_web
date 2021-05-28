@@ -54,10 +54,12 @@
                 </div>
 
                 <div v-if="index === currentIndex">
-                    <textarea name="reviewdialog" class="form-control" rows="3" placeholder="写下你的回复..." v-model="replyText">
+                    <textarea name="reviewdialog" class="form-control" rows="3" placeholder="写下你的回复..."
+                              v-model="replyText">
                     </textarea>
                     <br>
-                    <input type="button" name="btn-send" id="btn-send" class="btn-submit" value="发送" v-on:click="submitReply(review.reviewId)">
+                    <input type="button" name="btn-send" id="btn-send" class="btn-submit" value="发送"
+                           v-on:click="submitReply(review.reviewId, contentResp.blogId)">
                 </div>
                 <hr/>
             </div>
@@ -84,8 +86,8 @@
                 replyerName: '',
                 currentIndex: -1,
                 mainText: '',
-                reviewId:'',
-                replyText:''
+                reviewId: '',
+                replyText: ''
             }
         },
 
@@ -135,7 +137,7 @@
         methods: {
             //更新喜欢
             likeIt: function (blogId) {
-                if(this.toLoginPage()){
+                if (this.toLoginPage()) {
                     return
                 }
                 let url = this.likeItUrl + blogId + '&type=2';
@@ -152,7 +154,7 @@
 
             //提交评论
             submitReview: function (blogId) {
-                if(this.toLoginPage()){
+                if (this.toLoginPage()) {
                     return
                 }
                 let url = this.submitReviewUrl;
@@ -169,7 +171,11 @@
                 this.$http.post(url, req, {
                     withCredentials: true  //打开cookie
                 }).then(resp => {
+                    let code = resp.data.code;
                     this.$message(resp.data.msg);
+                    if ("0000" === code) {
+                        this.$router.go(0)
+                    }
                 }).catch(error => {
                     console.log(error);
                     this.$message("系统异常");
@@ -187,8 +193,8 @@
             },
 
             //提交回复
-            submitReply: function (reviewId) {
-                if(this.toLoginPage()){
+            submitReply: function (reviewId, blogId) {
+                if (this.toLoginPage()) {
                     return
                 }
                 let url = this.submitReplyUrl;
@@ -197,15 +203,20 @@
                     return
                 }
                 let req = {
-                    reviewId:reviewId,
+                    reviewId: reviewId,
                     replyerId: localStorage.getItem("loginId"),
-                    content:this.replyText
+                    content: this.replyText
                 };
                 this.replyText = '';
                 this.$http.post(url, req, {
                     withCredentials: true  //打开cookie
                 }).then(resp => {
+                    let code = resp.data.code;
                     this.$message(resp.data.msg);
+                    if ("0000" === code) {
+                        // this.$router.push({path: "/blog/" + blogId});
+                        this.$router.go(0)
+                    }
                 }).catch(error => {
                     console.log(error);
                     this.$message("系统异常");

@@ -34,9 +34,6 @@
 	width:60%;
 }
 
-.btn-update{
-	width: 10%;
-}
 
 .btn-update span{
 	width: 100%;
@@ -76,6 +73,13 @@
   height: 50px;
 }
 
+.selectSex{
+	margin: 10px auto;
+	width: 80%;
+	height: 38px;
+	color: #636c72e6;
+}
+
 .input-control input{
   width: 98%;
   padding: 1%;
@@ -106,7 +110,7 @@ input:-webkit-autofill{
 }
 
 .button-control input{
-  height: 30px;
+  height: 40px;
   width: 100%;
   outline:none;
   border:0;
@@ -114,7 +118,6 @@ input:-webkit-autofill{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
    color: #fff;
-   background-color: #58E481;
+   background-color: #58a3e4;
    border-radius: 5px;
-   height: 40px;
 }

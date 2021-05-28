@@ -12,7 +12,7 @@
 .user{
 	display: flex;
 	justify-content: space-between;
-	flex-direction: row;
+	flex-direction: column;
 	width: 90%;
 	align-items: center;
 	padding: 10px 5%;
@@ -31,15 +31,30 @@
 }
 
 .username{
-	width:70%;
+	width:80%;
+	display: inline-flex;
+	box-shadow: -6px 1px 1px 0px #0b0c2f1f;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.userLeft{
+	margin-right: auto;
+}
+
+.userRight{
+	margin-left: auto;
 }
 
 .myblog-plus{
-	width: 90%;
-	margin-top:30px;
-	padding: 10px 5%;
-	box-shadow: 10px 0 2px #ccc;
+	width: 63%;
+	padding: 9px 6%;
 	cursor: pointer;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 5px;
 }
 
 .myblog-plus i{
@@ -47,7 +62,8 @@
 }
 
 .mymess-plus{
-	margin-top: 10px;
+	margin-top: 65px;
+	background-color: #58a3e4;
 }
 
 .mymess-plus span{

@@ -39,7 +39,7 @@
         name: 'myblog',
         data() {
             return {
-                url: 'http://localhost:3000/myblog/',
+                url: '/myblog/',
                 bloglist: [],
                 user: {},
             }
