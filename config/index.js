@@ -28,7 +28,8 @@ module.exports = {
         proxyTable: {
             "/": {
                 // 你接口的域名
-                target: "http://localhost:6300",
+                // target: "http://localhost:6300",
+                target: "https://www.zhouqz.top/blog",
                 // 接口跨域时添加
                 changeOrigin: true,
                 // 要重写api地址时添加 因为有时候可能是部分接口代理跨域，需要一个能被匹配到的前缀，但是接口并不需要这个前缀，所以需要重写
@@ -37,7 +38,8 @@ module.exports = {
                 }
             }
         },
-        host: 'localhost',                      //主机
+        // host: 'localhost',                      //主机
+        host: 'https://www.zhouqz.top',                      //主机
         port: 8080,                             //端口
         autoOpenBrowser: false,                 //编译结束以后自动开启浏览器
         errorOverlay: true,                     //是否查询错误
