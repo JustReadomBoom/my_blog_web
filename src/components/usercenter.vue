@@ -107,7 +107,9 @@
             },
 
             myBlog: function () {
-                this.$router.push({path: "/myblog/" + localStorage.getItem("loginId")})
+                let loginId = localStorage.getItem("loginId");
+                console.log("loginId = " + loginId)
+                this.$router.push('/myblog/' + loginId)
             }
         }
     }

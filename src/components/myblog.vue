@@ -2,29 +2,28 @@
     <div class="bloglist">
         <article class="list">
             <ul>
-                <li v-for="blogitem in bloglist">
+                <li v-for="blogItem in blogList">
                     <div class="usermess">
                         <div>
                             <router-link :to="{}">
-                                <img :src="'../../static/images/' + user.icon"/>
+                                <img :src="photoUrl"/>
                             </router-link>
                         </div>
                         <div>
-                            <div><a href="#">{{user.name}}</a></div>
-                            <div style="color:#ccc">{{blogitem.date}}</div>
+                            <div><a href="#">{{userName}}</a></div>
+                            <div style="color:#ccc">{{blogItem.date}}</div>
                         </div>
                     </div>
-                    <router-link :to="{path: '/blog/' + blogitem._id}">
+                    <router-link :to="{path: '/blog/' + blogItem.blogId}">
                         <div class="blog-title">
-                            {{blogitem.title}}
+                            {{blogItem.title}}
                         </div>
-                        <div class="blog-content">{{blogitem.content}}</div>
+                        <div class="blog-content">{{blogItem.content}}</div>
                     </router-link>
                     <div class="footer">
-                        <div class="tag">{{blogitem.tag}}</div>
-                        <div><i class="fa fa-eye" aria-hidden="true"></i>{{blogitem.look_num}}</div>
-                        <div><i class="fa fa-heart" aria-hidden="true"></i>{{blogitem.like_num}}</div>
-                        <div><i class="fa fa-comment" aria-hidden="true"></i>{{blogitem.review_num}}</div>
+                        <div><i class="el-icon-view"></i>{{blogItem.lookNum}}</div>
+                        <div><i class="el-icon-star-off"></i>{{blogItem.likeNum}}</div>
+                        <div><i class="el-icon-chat-line-square"></i>{{blogItem.reviewNum}}</div>
                     </div>
                     <hr/>
                 </li>
@@ -39,38 +38,59 @@
         name: 'myblog',
         data() {
             return {
-                url: '/myblog/',
-                bloglist: [],
-                user: {},
+                url: '/blog/getBlogByLoginId?loginId=',
+                getUserUrl: '/user/getUserInfo?userId=',
+                blogList: [],
+                photoUrl: '',
+                userName: '',
+                blogId: '',
+                title: '',
+                content: '',
+                lookNum: '',
+                likeNum: '',
+                reviewNum: ''
             }
         },
 
         mounted: function () {
-            this.url = this.url + this.$route.params.id;
+            //获取博客信息
+            let loginId = this.$route.params.loginId;
+            this.url = this.url + loginId;
             console.log(this.url);
             this.$http.get(this.url, {
                 withCredentials: true
             }).then(resp => {
                 let code = resp.data.code;
-                if(code === "0000"){
+                let msg = resp.data.msg;
+                if (code === "0000") {
                     let respData = resp.data.data;
+                    this.blogList = respData.blogList.reverse();
+
+                } else {
+                    this.$message(msg);
                 }
-
-
-                this.bloglist = resp.data.bloglist.reverse();
-                this.user = resp.data.user;
-                this.$store.state.totalmess = resp.body.totalmess;
-                this.$store.state.title = '我的文章';
             }).catch(error => {
                 console.log(error);
+                this.$message("系统异常");
             });
-        },
 
-        //用过滤器对图片链接进行拼接
-        filters: {
-            imgFormat: function (value, tag) {
-                return '../assets/images/' + value;
-            }
+            //获取用户信息
+            let userId = localStorage.getItem("loginId");
+            this.$http.get(this.getUserUrl + userId, {
+                withCredentials: true
+            }).then(resp => {
+                let code = resp.data.code;
+                if ("0000" === code) {
+                    this.userName = resp.data.data.userName;
+                    this.photoUrl = resp.data.data.photoUrl;
+                } else {
+                    this.$message(resp.data.msg)
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message("系统异常");
+            });
+
         }
     }
 </script>

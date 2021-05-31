@@ -41,7 +41,7 @@ export default new Router({
       name: 'usercenter',
       component: usercenter
     },{
-      path: '/myblog/:id',
+      path: '/myblog/:loginId',
       name: 'myblog',
       component: myblog
     },{

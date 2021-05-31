@@ -4,7 +4,14 @@
 		<div class="usercenter">
 			<div class="user-style">
 				<div class="userimg-style"><img v-bind:src="photoUrl"/></div>
-				<div class="username-plus"><span>{{userName}}</span></div>
+
+				<div class="setting_right" @click.stop="uploadHeadImg">
+					<!--<div class="caption">更改头像</div>-->
+				</div>
+
+				<input type="file" accept="image/*" @change="handleFile" class="hiddenInput"/>
+
+				<!--<div class="username-plus"><span>{{userName}}</span></div>-->
 			</div>
 		</div>
 		<div class="input-control" style="margin-top:80px">
@@ -93,7 +100,23 @@
 					console.log(error);
                     this.$message("系统异常");
 				});
-			}
+			},
+
+            uploadHeadImg: function () {
+                this.$el.querySelector('.hiddenInput').click()
+            },
+
+            // 将头像显示
+            handleFile: function (e) {
+                let $target = e.target || e.srcElement;
+                let file = $target.files[0];
+                var reader = new FileReader();
+                reader.onload = (data) => {
+                    let res = data.target || data.srcElement;
+                    this.photoUrl = res.result
+                };
+                reader.readAsDataURL(file);
+            }
 		}
 	}
 </script>

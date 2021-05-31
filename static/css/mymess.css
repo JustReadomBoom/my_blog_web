@@ -121,3 +121,22 @@ input:-webkit-autofill{
    background-color: #58a3e4;
    border-radius: 5px;
 }
+
+
+
+
+
+/*.setting_right{*/
+	/*display: flex;*/
+	/*!*height: 37px;*!*/
+	/*justify-content: flex-end;*/
+	/*align-items: center;*/
+/*}*/
+/*.hiddenInput{*/
+	/*display: none;*/
+/*}*/
+/*.caption {*/
+	/*color: #8F8F8F;*/
+	/*font-size: 26px;*/
+	/*height: 37px;*/
+/*}*/
