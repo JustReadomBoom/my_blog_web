@@ -4,14 +4,10 @@
 		<div class="usercenter">
 			<div class="user-style">
 				<div class="userimg-style"><img v-bind:src="photoUrl"/></div>
-
-				<div class="setting_right" @click.stop="uploadHeadImg">
-					<!--<div class="caption">更改头像</div>-->
-				</div>
-
-				<input type="file" accept="image/*" @change="handleFile" class="hiddenInput"/>
-
-				<!--<div class="username-plus"><span>{{userName}}</span></div>-->
+				<el-upload :action="uploadImgUrl" :on-success="uploadSuccess" :show-file-list="false" :max-size="5 * 1024 * 1024"
+						  max-count="1">
+					<i class="el-icon-upload2"></i>
+				</el-upload>
 			</div>
 		</div>
 		<div class="input-control" style="margin-top:80px">
@@ -47,13 +43,15 @@
 			return {
 				url: '/user/getUserInfo?userId=',
 				updateUserUrl: '/user/updateUser',
+				uploadImgUrl: '/user/uploadImg?userId=',
                 nickName: '',
                 userName:'',
                 photoUrl: '',
                 sex:'',
                 mobile:'',
                 email:'',
-                age:''
+                age:'',
+                imgUrl:''
 			}
 		},
 
@@ -62,6 +60,7 @@
                 return
             }
             let userId = localStorage.getItem("loginId");
+            this.uploadImgUrl = this.uploadImgUrl + userId;
             this.$http.get(this.url + userId, {
                 withCredentials: true
             }).then(resp => {
@@ -102,21 +101,13 @@
 				});
 			},
 
-            uploadHeadImg: function () {
-                this.$el.querySelector('.hiddenInput').click()
-            },
-
-            // 将头像显示
-            handleFile: function (e) {
-                let $target = e.target || e.srcElement;
-                let file = $target.files[0];
-                var reader = new FileReader();
-                reader.onload = (data) => {
-                    let res = data.target || data.srcElement;
-                    this.photoUrl = res.result
-                };
-                reader.readAsDataURL(file);
-            }
+            uploadSuccess: function (e) {
+			    let code = e.code;
+			    if("0000" === code){
+			        this.photoUrl = e.data.imgUrl;
+				}
+				this.$message(e.msg);
+			}
 		}
 	}
 </script>

@@ -5,10 +5,12 @@ import App from './App'
 import router from './router'
 import store from './store/vuex'
 import VueResource from "vue-resource"
+// import uView from "uview-ui";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueResource);
+// Vue.use(uView);
 
 Vue.prototype.toLoginPage = function (){
     let loginId = localStorage.getItem("loginId");
